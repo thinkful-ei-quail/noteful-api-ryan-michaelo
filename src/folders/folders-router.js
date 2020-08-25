@@ -48,4 +48,34 @@ foldersRouter
       .catch(next);
   });
 
+foldersRouter
+  .route('/:id')
+  .all((req, res, next) => {
+    folderService.getById(
+      req.app.get('db'),
+      req.params.id
+    )
+      .then(folder => {
+        if (!folder) {
+          return res.status(404).json({ error: { message: 'Folder doesn\'t exist' } });
+        }
+
+        res.folder = folder;
+        next();
+      })
+      .catch(next);
+  })
+  .get((req, res, next) => {
+    res.json(serializerFolder(res.folder));
+  })
+  .delete((req, res, next) => {
+    folderService.deleteFolder(
+      req.app.get('db'),
+      req.params.id
+    )
+      .then(() => { res.status(204).end(); })
+      .catch(next);
+  });
+
+
 module.exports = foldersRouter;
