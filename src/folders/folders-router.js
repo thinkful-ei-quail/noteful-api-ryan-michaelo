@@ -75,6 +75,30 @@ foldersRouter
     )
       .then(() => { res.status(204).end(); })
       .catch(next);
+  })
+  .patch(jsonParser, (req, res, next) => {
+    const { folder_name } = req.body;
+    const updatedFolder = { folder_name };
+
+
+    const numberOfValues = Object.values(updatedFolder).filter(Boolean).length;
+    if (numberOfValues === 0) {
+      return res.status(400).json({
+        error: {
+          message: 'Request body must contain new folder name'
+        }
+      });
+    }
+
+    folderService.updateFolder(
+      req.app.get('db'),
+      req.params.id,
+      updatedFolder
+    )
+      .then(numOfRowsAffected => {
+        res.status(204).end();
+      })
+      .catch(next);
   });
 
 
