@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
-
+const foldersRouter = require('./folders/folders-router');
 const app = express();
 
 const morganOption = (NODE_ENV === 'production')
@@ -15,6 +15,11 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
+
+//Routes
+app.use('/api/folders', foldersRouter);
+
+//Test Route
 app.get('/', (request, response) => {
   response.send('Hello, world!');
 });
