@@ -41,8 +41,12 @@ function makeMaliciousNote() {
   };
   const expectedNote = {
     ...maliciousNote,
-    note_name: 'Bad Hacker! &lt;script&gt;alert("xss");&lt;/script&gt;',
-    note_name: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+    note_name: 'Bad hacker! &lt;script&gt;alert("xss");&lt;/script&gt;',
+    content: `Bad image <img src="https://url.to.file.which/does-not.exist">. But not <strong>all</strong> bad.`,
+  };
+  return {
+    maliciousNote,
+    expectedNote,
   };
 }
 
