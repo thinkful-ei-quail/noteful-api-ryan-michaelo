@@ -37,7 +37,7 @@ notesRouter
         });
       }
     }
-    newNote.folderId = folderId;
+    newNote.folderid = folderId;
     const knexInstance = req.app.get('db');
     NotesService.insertNote(knexInstance, newNote)
       .then((note) => {
