@@ -1,5 +1,5 @@
 
-INSERT INTO "folders" (folder_name) VALUES
+INSERT INTO "folders" (name) VALUES
     ('trucks'),
     ('monsters'),
     ('things'),

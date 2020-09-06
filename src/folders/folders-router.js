@@ -8,7 +8,7 @@ const jsonParser = express.json();
 
 const serializerFolder = folder => ({
   id: folder.id,
-  folder_name: xss(folder.folder_name)
+  name: xss(folder.name)
 });
 
 foldersRouter
@@ -23,8 +23,8 @@ foldersRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { folder_name } = req.body;
-    const newFolder = { folder_name };
+    const { name } = req.body;
+    const newFolder = { name };
 
     for (const [key, value] of Object.entries(newFolder)) {
       // eslint-disable-next-line eqeqeq
@@ -77,8 +77,8 @@ foldersRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { folder_name } = req.body;
-    const updatedFolder = { folder_name };
+    const { name } = req.body;
+    const updatedFolder = { name };
 
 
     const numberOfValues = Object.values(updatedFolder).filter(Boolean).length;

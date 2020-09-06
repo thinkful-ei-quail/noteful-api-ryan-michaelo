@@ -10,10 +10,10 @@ const { json } = require('express');
 
 const serializeNote = (note) => ({
   id: note.id,
-  note_name: xss(note.note_name),
-  date_created: note.date_created,
+  name: xss(note.name),
+  modified: note.modified,
+  folderId: note.folderid,
   content: xss(note.content),
-  folder_id: note.folder_id,
 });
 
 notesRouter
@@ -27,8 +27,8 @@ notesRouter
       .catch(next);
   })
   .post(jsonParser, (req, res, next) => {
-    const { note_name, content, folder_id } = req.body;
-    const newNote = { note_name, content };
+    const { name, content, folderId } = req.body;
+    const newNote = { name, content };
 
     for (const [key, value] of Object.entries(newNote)) {
       if (value == null) {
@@ -37,7 +37,7 @@ notesRouter
         });
       }
     }
-    newNote.folder_id = folder_id;
+    newNote.folderId = folderId;
     const knexInstance = req.app.get('db');
     NotesService.insertNote(knexInstance, newNote)
       .then((note) => {
@@ -77,8 +77,8 @@ notesRouter
       .catch(next);
   })
   .patch(jsonParser, (req, res, next) => {
-    const { note_name, content } = req.body;
-    const noteToUpdate = { note_name, content };
+    const { name, content } = req.body;
+    const noteToUpdate = { name, content };
 
     const numberOfValues = Object.values(noteToUpdate).filter(Boolean).length;
     if (numberOfValues === 0) {
